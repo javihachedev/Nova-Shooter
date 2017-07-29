@@ -23,6 +23,8 @@ public class EnemyBehaviour : MonoBehaviour
     // Enemy's speed
     public float speed = 2.0f;
     float step;
+    // Enemy's points
+    public int points;
 
     // Enemies colour
     GameObject enemyBlue;
@@ -116,7 +118,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         Destroy(this.gameObject);
         GameController.instance.KilledEnemy();
-        GameController.instance.IncreaseScore(10);
+        GameController.instance.IncreaseScore(points);
         // Check if explosion was set
         if (explosion)
         {

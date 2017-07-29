@@ -46,7 +46,10 @@ public class MainMenuBehaviour : MonoBehaviour
     {
         IEnumerator<Toggle> toggleEnum = spaceshipSelector.ActiveToggles().GetEnumerator();
         toggleEnum.MoveNext();
-        spaceShipName = toggleEnum.Current.name;
+        if (toggleEnum.Current != null)
+        {
+            spaceShipName = toggleEnum.Current.name;
+        }
 
         InitializeMenu();
     }

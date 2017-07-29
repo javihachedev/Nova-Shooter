@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour
+{
 
     // Singleton
     public static GameController instance;
@@ -49,103 +50,98 @@ public class GameController : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(8, 9, true);
     }
 
-    void Start () {
-        StartCoroutine(SpawnEnemies());
+    void Start()
+    {
+
+        SpawnEnemies();
 
         livesText.text = "x " + PlayerBehaviour.instance.lives;
     }
 
-    // Coroutine to spawn enemies
-    IEnumerator SpawnEnemies()
+    private void Update()
     {
-        // Give the player time before we start the game
-        yield return new WaitForSeconds(timeBeforeSpawning);
-        // After timeBeforeSpawning has elapsed, we will enter
-        // this loop
-        while (true)
+        // Don't spawn anything new until all of the previous wave's enemies are dead
+        if (currentNumberOfEnemies <= 0)
         {
-            // Don't spawn anything new until all of the previous
-            // wave's enemies are dead
-            if (currentNumberOfEnemies <= 0)
-            {
-                // Increases wave's number
-                waveNumber++;
-                waveText.text = "Wave: " + waveNumber;
-
-                // 1st Level
-                if(waveNumber < 11)
-                {
-                    ufosPerWave = 10;
-                    ufosHealth = 1;
-                    bigEnemiesPerWave = 3;
-                    bigEnemy = bigEnemy1;
-                }
-                // 2nd Level
-                else if (waveNumber > 10 && waveNumber < 21)
-                {
-                    ufosPerWave = 15;
-                    ufosHealth = 2;
-                    bigEnemiesPerWave = 4;
-                    bigEnemy = bigEnemy2;
-                }
-                // 3rd level
-                else if (waveNumber > 20 && waveNumber < 31) 
-                {
-                    ufosPerWave = 20;
-                    ufosHealth = 3;
-                    bigEnemiesPerWave = 5;
-                    bigEnemy = bigEnemy3;
-                }
-                // 4th level
-                else if (waveNumber > 30 && waveNumber < 41) 
-                {
-                    ufosPerWave = 25;
-                    ufosHealth = 4;
-                    bigEnemiesPerWave = 6;
-                    bigEnemy = bigEnemy4;
-                }
-                // 5th level
-                else if (waveNumber > 40 && waveNumber < 51) 
-                {
-                    ufosPerWave = 30;
-                    ufosHealth = 5;
-                    bigEnemiesPerWave = 7;
-                    bigEnemy = bigEnemy5;
-                }
-                // Extra levels (> 50 waves)
-                else
-                {
-                    ufosPerWave = (int) Random.Range(30, 51);
-                    ufosHealth = (int) Random.Range(1, 6);
-                    bigEnemiesPerWave = (int)Random.Range(7, 16);
-                    bigEnemy = bigEnemy5;
-                }
-
-                // The ufos are spawned in odd waves
-                if (waveNumber % 2 != 0)
-                {
-                    //Spawn 10 enemies in a random position
-                    for (int i = 0; i < ufosPerWave; i++)
-                    {
-                        SpawnEnemy(ufo, ufosHealth);
-                        yield return new WaitForSeconds(timeBetweenEnemies);
-                    }
-                    
-                }
-                // The "big enemies" are spawned in pair waves
-                else
-                {
-                    for (int i = 0; i < bigEnemiesPerWave; i++)
-                    {
-                        SpawnEnemy(bigEnemy);
-                        yield return new WaitForSeconds(timeBetweenEnemies);
-                    }
-                }
-            }
-            // How much time to wait before checking if we need to
-            // spawn another wave
-            yield return new WaitForSeconds(timeBeforeWaves);
+            SpawnEnemies();
         }
+    }
+
+    // Coroutine to spawn enemies
+    void SpawnEnemies()
+    {
+        // Increases wave's number
+        waveNumber++;
+        waveText.text = "Wave: " + waveNumber;
+
+        // 1st Level
+        if (waveNumber < 11)
+        {
+            ufosPerWave = 10;
+            ufosHealth = 1;
+            bigEnemiesPerWave = 3;
+            bigEnemy = bigEnemy1;
+        }
+        // 2nd Level
+        else if (waveNumber > 10 && waveNumber < 21)
+        {
+            ufosPerWave = 15;
+            ufosHealth = 2;
+            bigEnemiesPerWave = 4;
+            bigEnemy = bigEnemy2;
+        }
+        // 3rd level
+        else if (waveNumber > 20 && waveNumber < 31)
+        {
+            ufosPerWave = 20;
+            ufosHealth = 3;
+            bigEnemiesPerWave = 5;
+            bigEnemy = bigEnemy3;
+        }
+        // 4th level
+        else if (waveNumber > 30 && waveNumber < 41)
+        {
+            ufosPerWave = 25;
+            ufosHealth = 4;
+            bigEnemiesPerWave = 6;
+            bigEnemy = bigEnemy4;
+        }
+        // 5th level
+        else if (waveNumber > 40 && waveNumber < 51)
+        {
+            ufosPerWave = 30;
+            ufosHealth = 5;
+            bigEnemiesPerWave = 7;
+            bigEnemy = bigEnemy5;
+        }
+        // Extra levels (> 50 waves)
+        else
+        {
+            ufosPerWave = (int)Random.Range(30, 51);
+            ufosHealth = (int)Random.Range(1, 6);
+            bigEnemiesPerWave = (int)Random.Range(7, 16);
+            bigEnemy = bigEnemy5;
+        }
+
+        // The ufos are spawned in odd waves
+        if (waveNumber % 2 != 0)
+        {
+            //Spawn 10 enemies in a random position
+            for (int i = 0; i < ufosPerWave; i++)
+            {
+                SpawnEnemy(ufo, ufosHealth);
+            }
+
+        }
+        // The "big enemies" are spawned in pair waves
+        else
+        {
+            for (int i = 0; i < bigEnemiesPerWave; i++)
+            {
+                SpawnEnemy(bigEnemy);
+            }
+        }
+
     }
 
     // Spawn an enemy
@@ -212,7 +208,7 @@ public class GameController : MonoBehaviour {
                 break;
             // Wave 9: Combined ufo
             case 9:
-                colourIndex = (int) Random.Range(0, 3);
+                colourIndex = (int)Random.Range(0, 3);
                 enemyBehaviour.ActivateEnemyByColour(enemiesColours[colourIndex]);
                 enemyBehaviour.speed = 3f;
                 enemyBehaviour.health = ufoHealth;
@@ -224,7 +220,7 @@ public class GameController : MonoBehaviour {
                 enemyBehaviour.health += 4;
                 break;
         }
-        
+
         // Increases the count of enemies
         currentNumberOfEnemies++;
     }

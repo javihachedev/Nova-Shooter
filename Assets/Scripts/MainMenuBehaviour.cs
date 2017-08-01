@@ -11,6 +11,7 @@ public class MainMenuBehaviour : MonoBehaviour
     public GameObject mainMenu;
     public GameObject playerSelectionMenu;
     public ToggleGroup spaceshipSelector;
+    public GameObject creditsMenu;
 
     public static string spaceShipName;
 
@@ -30,10 +31,11 @@ public class MainMenuBehaviour : MonoBehaviour
         SceneManager.LoadScene(levelName);
     }
 
-    void InitializeMenu()
+    public void InitializeMenu()
     {
         mainMenu.SetActive(true);
         playerSelectionMenu.SetActive(false);
+        creditsMenu.SetActive(false);
     }
 
     public void OpenSpaceshipSelector()
@@ -52,6 +54,12 @@ public class MainMenuBehaviour : MonoBehaviour
         }
 
         InitializeMenu();
+    }
+
+    public void OpenCredits()
+    {
+        mainMenu.SetActive(false);
+        creditsMenu.SetActive(true);
     }
 
     public static string GetSpaceshipSpriteName()

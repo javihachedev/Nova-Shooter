@@ -229,6 +229,7 @@ public class GameController : MonoBehaviour
     public void KilledEnemy()
     {
         currentNumberOfEnemies--;
+        //Debug.Log(currentNumberOfEnemies);
     }
 
     // Increases the score

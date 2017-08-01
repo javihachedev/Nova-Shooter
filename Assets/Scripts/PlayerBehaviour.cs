@@ -77,21 +77,21 @@ public class PlayerBehaviour : MonoBehaviour
             Rotation();
             Movement();
 
-            #if UNITY_STANDALONE_WIN
-                if (CrossPlatformInputManager.GetButton("Fire1") && timeTillNextFire < 0)
+#if UNITY_STANDALONE_WIN || UNITY_WEBGL
+            if (CrossPlatformInputManager.GetButton("Fire1") && timeTillNextFire < 0)
                 {
                     timeTillNextFire = timeBetweenFires;
                     ShootLaser();
                 }
-            #endif
+#endif
 
-            #if UNITY_ANDROID
+#if UNITY_ANDROID
                 if (timeTillNextFire < 0)
                 {
                     timeTillNextFire = timeBetweenFires;
                     ShootLaser();
                 }
-            #endif
+#endif
 
             timeTillNextFire -= Time.deltaTime;
 
@@ -102,7 +102,7 @@ public class PlayerBehaviour : MonoBehaviour
     // Will rotate the ship to face the mouse (only pc version)
     void Rotation()
     {
-       
+
 #if UNITY_ANDROID
         worldPos.x = CrossPlatformInputManager.GetAxis("Horizontal2");
         worldPos.y = CrossPlatformInputManager.GetAxis("Vertical2");
@@ -111,7 +111,7 @@ public class PlayerBehaviour : MonoBehaviour
         //this.transform.rotation = Quaternion.LookRotation(worldPos, Vector3.back);
 #endif
 
-#if UNITY_STANDALONE_WIN
+#if UNITY_STANDALONE_WIN || UNITY_WEBGL
         // We need to tell where the mouse is relative to the player
         worldPos = Input.mousePosition;
         worldPos = Camera.main.ScreenToWorldPoint(worldPos);

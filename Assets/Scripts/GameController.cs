@@ -22,11 +22,11 @@ public class GameController : MonoBehaviour
     public float timeBeforeSpawning = 1.5f;
     public float timeBetweenEnemies = .25f;
     public float timeBeforeWaves = 2.0f;
+    public int waveNumber = 0;
     int ufosPerWave;
     int ufosHealth;
     int bigEnemiesPerWave;
-    int currentNumberOfEnemies = 0;
-    public int waveNumber = 0;
+    int currentNumberOfEnemies;
 
     int score = 0;
     [Header("User Interface")]
@@ -45,9 +45,16 @@ public class GameController : MonoBehaviour
     // Array of enemies to check
     GameObject[] enemiesActive;
 
+    // Mouse
+    public Texture2D cursorTexture;
+    public CursorMode cursorMode = CursorMode.Auto;
+    public Vector2 hotSpot = Vector2.zero;
+
+
     void Awake()
     {
         instance = this;
+        currentNumberOfEnemies = 0;
 
         // Ignore collisions of the enemies (layer 9) and their lasers (layer 8)
         Physics2D.IgnoreLayerCollision(8, 9, true);

@@ -10,11 +10,11 @@ as much as you want. The link on itchi.io of this game is: https://phijgames.itc
 
 ## Screenshots
 
-![Alt text](Nova-Shooter/Screenshots/Nova Shooter 01.jpg)
-![Alt text](Nova-Shooter/Screenshots/Nova Shooter 02.jpg)
-![Alt text](Nova-Shooter/Screenshots/Nova Shooter 03.jpg)
-![Alt text](Nova-Shooter/Screenshots/Nova Shooter 04.jpg)
-![Alt text](Nova-Shooter/Screenshots/Nova Shooter 05.jpg)
+![Alt text](Screenshots/Nova Shooter 01.jpg?raw=true)
+![Alt text](Screenshots/Nova Shooter 02.jpg?raw=true)
+![Alt text](Screenshots/Nova Shooter 03.jpg?raw=true)
+![Alt text](Screenshots/Nova Shooter 04.jpg?raw=true)
+![Alt text](Screenshots/Nova Shooter 05.jpg?raw=true)
 
 ## Platforms
 

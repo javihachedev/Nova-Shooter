@@ -42,6 +42,9 @@ public class GameController : MonoBehaviour
     string[] enemiesColours = { "blue", "red", "black" };
     int colourIndex;
 
+    // Array of enemies to check
+    GameObject[] enemiesActive;
+
     void Awake()
     {
         instance = this;
@@ -63,7 +66,12 @@ public class GameController : MonoBehaviour
         // Don't spawn anything new until all of the previous wave's enemies are dead
         if (currentNumberOfEnemies <= 0)
         {
-            SpawnEnemies();
+            enemiesActive = GameObject.FindGameObjectsWithTag("Enemy");
+            // Double check if all enemies are dead
+            if (enemiesActive.Length == 0)
+            {
+                SpawnEnemies();
+            }
         }
     }
 

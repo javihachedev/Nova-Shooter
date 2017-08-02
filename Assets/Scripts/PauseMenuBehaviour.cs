@@ -33,7 +33,7 @@ public class PauseMenuBehaviour : MainMenuBehaviour
     public void Update()
     {
         // Opens pause menu
-        if (Input.GetKeyUp("escape"))
+        if (Input.GetKeyUp("escape") && !gameOverMenu.activeInHierarchy)
         {
             if (!optionsMenu.activeInHierarchy)
             {

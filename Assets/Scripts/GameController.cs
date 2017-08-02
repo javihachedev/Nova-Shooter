@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -62,33 +63,62 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-
-        SpawnEnemies();
-
+        StartCoroutine(SpawnEnemies());
         livesText.text = "x " + PlayerBehaviour.instance.lives;
     }
 
-    private void Update()
+    // Coroutine to spawn enemies
+    IEnumerator SpawnEnemies()
     {
-        // Don't spawn anything new until all of the previous wave's enemies are dead
-        if (currentNumberOfEnemies <= 0)
+        // Give the player time before we start the game
+        yield return new WaitForSeconds(timeBeforeSpawning);
+
+        while (true)
         {
-            enemiesActive = GameObject.FindGameObjectsWithTag("Enemy");
-            // Double check if all enemies are dead
-            if (enemiesActive.Length == 0)
+            // Don't spawn anything new until all of the previous wave's enemies are dead
+            if (currentNumberOfEnemies <= 0)
             {
-                SpawnEnemies();
+                enemiesActive = GameObject.FindGameObjectsWithTag("Enemy");
+                // Double check if all enemies are dead
+                if (enemiesActive.Length == 0)
+                {
+
+                    // Increases wave's number
+                    waveNumber++;
+                    waveText.text = "Wave: " + waveNumber;
+
+                    // Checks the current level to modify attributes if necessary
+                    CheckLevel();
+
+                    // The ufos are spawned in odd waves
+                    if (waveNumber % 2 != 0)
+                    {
+                        //Spawn 10 enemies in a random position
+                        for (int i = 0; i < ufosPerWave; i++)
+                        {
+                            SpawnEnemy(ufo, ufosHealth);
+                        }
+
+                    }
+                    // The "big enemies" are spawned in pair waves
+                    else
+                    {
+                        for (int i = 0; i < bigEnemiesPerWave; i++)
+                        {
+                            SpawnEnemy(bigEnemy);
+                        }
+                    }
+                }
             }
+
+            yield return new WaitForSeconds(timeBeforeWaves);
+
         }
+
     }
 
-    // Coroutine to spawn enemies
-    void SpawnEnemies()
+    void CheckLevel()
     {
-        // Increases wave's number
-        waveNumber++;
-        waveText.text = "Wave: " + waveNumber;
-
         // 1st Level
         if (waveNumber < 11)
         {
@@ -137,26 +167,6 @@ public class GameController : MonoBehaviour
             bigEnemiesPerWave = (int)Random.Range(7, 16);
             bigEnemy = bigEnemy5;
         }
-
-        // The ufos are spawned in odd waves
-        if (waveNumber % 2 != 0)
-        {
-            //Spawn 10 enemies in a random position
-            for (int i = 0; i < ufosPerWave; i++)
-            {
-                SpawnEnemy(ufo, ufosHealth);
-            }
-
-        }
-        // The "big enemies" are spawned in pair waves
-        else
-        {
-            for (int i = 0; i < bigEnemiesPerWave; i++)
-            {
-                SpawnEnemy(bigEnemy);
-            }
-        }
-
     }
 
     // Spawn an enemy

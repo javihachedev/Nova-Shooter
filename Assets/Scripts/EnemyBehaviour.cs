@@ -94,7 +94,7 @@ public class EnemyBehaviour : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeShooting);
         while (true)
         {
-            if (!PauseMenuBehaviour.isPaused)
+            if (!PauseMenuBehaviour.isPaused || !PauseMenuBehaviour.instance.gameOverMenu.activeInHierarchy)
             {
                 // Play sound
                 audioSource.PlayOneShot(shootSound);

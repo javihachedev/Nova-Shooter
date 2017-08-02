@@ -25,5 +25,5 @@ Unity.
 
 Some 3rd parties assets have been used to develop this game:
 
-2D Art - Kenney (kenney.nl)
-Music - Rhinoceros, Kevin MacLeod (incompetech.com)
+*2D Art - Kenney (kenney.nl)
+*Music - Rhinoceros, Kevin MacLeod (incompetech.com)

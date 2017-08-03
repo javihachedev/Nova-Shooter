@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,6 +13,10 @@ public class MainMenuBehaviour : MonoBehaviour
     public GameObject playerSelectionMenu;
     public ToggleGroup spaceshipSelector;
     public GameObject creditsMenu;
+    public GameObject loadingImage;
+    public Slider loadingBar;
+
+    private AsyncOperation async;
 
     public static string spaceShipName;
 
@@ -26,9 +31,24 @@ public class MainMenuBehaviour : MonoBehaviour
         {
             // The parameters of the game should be resumed, so if it starts again, it won't be paused
             PauseMenuBehaviour.instance.ResumeGame();
+            SceneManager.LoadSceneAsync(levelName);
         }
+        else
+        {
+            mainMenu.SetActive(false);
+            loadingImage.SetActive(true);
+            StartCoroutine(LoadLevelWithBar(levelName));
+        }
+    }
 
-        SceneManager.LoadScene(levelName);
+    IEnumerator LoadLevelWithBar(string levelName)
+    {
+        async = SceneManager.LoadSceneAsync(levelName);
+        while (!async.isDone)
+        {
+            loadingBar.value = async.progress;
+            yield return null;
+        }
     }
 
     public void InitializeMenu()
